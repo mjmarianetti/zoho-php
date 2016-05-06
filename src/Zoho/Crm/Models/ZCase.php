@@ -2,7 +2,7 @@
 
 namespace Zoho\Crm\Models;
 
-class Product
+class ZCase
 {
 
 }

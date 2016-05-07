@@ -28,10 +28,15 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->assertNotNull($client->getClient());
     }
 
-    public function testCallLeadsMethod()
+    /*public function testCallLeadsMethod()
     {
         $client = new ZohoClient();
         $response = $client->getRecords('Leads', $this->params,false);
-        $this->assertNotNull($response);
     }
+
+    public function testCallAccountsMethod()
+    {
+        $client = new ZohoClient();
+        $response = $client->getRecords('Accounts', $this->params,false);
+    }*/
 }

@@ -7,9 +7,9 @@ use Exception;
 
 class ZohoClient
 {
-    protected $baseUrl = 'https://crm.zoho.com/crm/private/json/';
+    protected $baseUrl;
 
-    protected $scope = 'crmapi';
+    protected $scope;
 
     protected $client;
 
@@ -17,10 +17,16 @@ class ZohoClient
 
     protected $method;
 
+    protected $format;
+
     protected $httpMethod = 'POST';
 
     public function __construct()
     {
+        $this->format = config('zoho.format','json');
+        $this->baseUrl = config('zoho.baseurl','https://crm.zoho.com/crm/private/') . $this->format.'/';
+        $this->scope = config('zoho.scope','crmapi');
+        $this->authToken = config('zoho.authtoken');
         $this->client = new Client(['base_uri' => $this->baseUrl]);
     }
 
@@ -66,21 +72,7 @@ class ZohoClient
         return $this->baseUrl.$resource.'/'.$this->method;
     }
 
-    public function checkAuthtoken($params)
-    {
-        if (!isset($params['authtoken'])) {
-            throw new Exception('authtoken is required');
-        }
-    }
-
-    public function checkScope($params)
-    {
-        if (!isset($params['scope'])) {
-            throw new Exception('scope is required');
-        }
-    }
-
-    public function getRecords($resource, $params)
+    public function getRecords($resource, $params = [])
     {
         $this->method = __FUNCTION__;
         $this->call($resource, $params);
@@ -100,13 +92,13 @@ class ZohoClient
         $this->call($resource, $params);
     }
 
-    public function getMyRecords($resource, $params)
+    public function getMyRecords($resource, $params = [])
     {
         $this->method = __FUNCTION__;
         $this->call($resource, $params);
     }
 
-    public function getDeletedRecordIds($resource, $params)
+    public function getDeletedRecordIds($resource, $params = [])
     {
         $this->method = __FUNCTION__;
         $this->call($resource, $params);
@@ -283,19 +275,22 @@ class ZohoClient
         return $queryParams;
     }
 
-    public function call($resource, $params, $rawResponse = false)
+    public function call($resource, $params = [], $rawResponse = false)
     {
         $url = $this->buildUrl($resource);
+
+        if (!isset($params['authtoken'])) {
+            $params['authtoken'] = $this->authToken;
+        }
 
         if (!isset($params['scope'])) {
             $params['scope'] = $this->scope;
         }
 
-        $this->checkAuthtoken($params);
-        $this->checkScope($params);
-
         /* Build url with parameters */
         $finalUrl = $url.'?'.$this->parseParams($params);
+
+        echo $finalUrl;
 
         $response = $this->client->post($finalUrl);
 

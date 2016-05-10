@@ -1,6 +1,6 @@
 <?php
 
-namespace Zoho;
+namespace Mjmarianetti\Zoho;
 
 use GuzzleHttp\Client;
 use Exception;

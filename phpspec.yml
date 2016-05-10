@@ -1,0 +1,4 @@
+suites:
+  library_suite:
+    namespace: Mjmarianetti\Zoho\Tests
+    psr4_prefix: Mjmarianetti\Zoho\Tests

@@ -203,9 +203,8 @@ If you would like to use a iterator to loop through the data received, you can u
     $response = $zc->getRecords('Accounts', []);
 
     $it = new ZohoResponseIterator((array) $response->response->result->Accounts->row);
-    $resultados = [];
     foreach ($it as $key => $value) {
         //$value->val and $value->content;      
     }
 
-For now, you should check that `$response->response->result->Resource->row` is set
+For now, you should check that `$response->response->result->Resource->row` is not null

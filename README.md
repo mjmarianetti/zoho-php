@@ -72,6 +72,7 @@ After initialization you can call the API.
 All this methods follow the same pattern, where `$resource` is the Module you want to call, and `$params` all the parameters that you want to use.
 
 The response returned usually follows the pattern:
+
     $result = $client->getRecords(RESOURCE,$params);
 
     $result->response->nodata;

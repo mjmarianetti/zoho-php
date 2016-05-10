@@ -34,12 +34,17 @@ class ZohoServiceProvider extends ServiceProvider
      */
     private function registerZoho()
     {
-        $this->app->bind('SammyK\LaravelFacebookSdk\LaravelFacebookSdk', function ($app) {
+        $this->app->bind('Mjmarianetti\Zoho\ZohoClient', function ($app) {
           if ($this->isLumen()) {
               $app->configure('zoho');
           }
 
-          return new  ZohoClient();
+          $config = [];
+          $config['authtoken'] = config('zoho.authtoken');
+          $config['scope'] = config('zoho.scope');
+          $config['format'] = config('zoho.format','json');
+          $config['baseurl'] = config('zoho.baseurl','https://crm.zoho.com/crm/private/');
+          return new  ZohoClient($config);
       });
     }
 

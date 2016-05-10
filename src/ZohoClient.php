@@ -21,12 +21,12 @@ class ZohoClient
 
     protected $httpMethod = 'POST';
 
-    public function __construct()
+    public function __construct($config)
     {
-        $this->format = config('zoho.format','json');
-        $this->baseUrl = config('zoho.baseurl','https://crm.zoho.com/crm/private/') . $this->format.'/';
-        $this->scope = config('zoho.scope','crmapi');
-        $this->authToken = config('zoho.authtoken');
+        $this->format = $config['format'];
+        $this->baseUrl = $config['baseurl'] . $this->format.'/';
+        $this->scope = $config['scope'];
+        $this->authToken = $config['authtoken'];
         $this->client = new Client(['base_uri' => $this->baseUrl]);
     }
 
@@ -98,6 +98,7 @@ class ZohoClient
         return $this->call($resource, $params);
     }
 
+    //response->result->DeletedIDs;
     public function getDeletedRecordIds($resource, $params = [])
     {
         $this->method = __FUNCTION__;

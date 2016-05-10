@@ -75,12 +75,12 @@ class ZohoClient
     public function getRecords($resource, $params = [])
     {
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function getRecordById($resource, $params)
     {
-        if (!isset($params['id']) || !isset($params['idlist'])) {
+        if (!isset($params['id']) && !isset($params['idlist'])) {
             throw new Exception('id or idlist is required');
         }
 
@@ -89,19 +89,19 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function getMyRecords($resource, $params = [])
     {
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function getDeletedRecordIds($resource, $params = [])
     {
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function getSearchRecordsByPDC($resource, $params)
@@ -117,7 +117,7 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function deleteRecords($resource, $params)
@@ -127,7 +127,7 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function getRelatedRecords($resource, $params)
@@ -141,7 +141,7 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function getFields($resource, $params)
@@ -151,7 +151,7 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function getUsers($resource, $params)
@@ -161,7 +161,7 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function delink($resource, $params)
@@ -179,7 +179,7 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function downloadFile($resource, $params)
@@ -189,7 +189,7 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+      return $this->call($resource, $params);
     }
 
     public function deleteFile($resource, $params)
@@ -199,7 +199,7 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function downloadPhoto($resource, $params)
@@ -209,7 +209,7 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function deletePhoto($resource, $params)
@@ -219,7 +219,7 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
+        return $this->call($resource, $params);
     }
 
     public function getModules($params)
@@ -229,7 +229,7 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call('Info', $params);
+        return $this->call('Info', $params);
     }
 
     public function searchRecords($resource, $params)
@@ -239,21 +239,7 @@ class ZohoClient
         }
 
         $this->method = __FUNCTION__;
-        $this->call($resource, $params);
-    }
-
-    public function getResponse($response)
-    {
-        $result = json_decode($response);
-
-        if (!isset($result)) {
-            throw new Exception('No response from API - use rawResponse to get more details');
-        }
-
-        //$result->response->nodata;
-        //$result->response->result->FL
-        //$result->response->result->RESOURCE->row
-        return $result;
+        return $this->call($resource, $params);
     }
 
     public function parseParams($params)
@@ -290,8 +276,6 @@ class ZohoClient
         /* Build url with parameters */
         $finalUrl = $url.'?'.$this->parseParams($params);
 
-        echo $finalUrl;
-
         $response = $this->client->post($finalUrl);
 
         if (!isset($response)) {
@@ -308,4 +292,19 @@ class ZohoClient
 
         return $this->getResponse($response->getBody());
     }
+
+
+        public function getResponse($response)
+        {
+            $result = json_decode($response);
+
+            if (!isset($result)) {
+                throw new Exception('No response from API - use rawResponse to get more details');
+            }
+
+            //$result->response->nodata;
+            //$result->response->result->FL
+            //$result->response->result->RESOURCE->row
+            return $result;
+        }
 }

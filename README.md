@@ -8,7 +8,7 @@ PACKAGE UNDER DEVELOPMENT, NOT ALL METHODS DOCUMENTED
 To install this package you must modify your `composer.json` file and run `composer update`
 
     "require": {
-        "mjmarianetti/zoho-php": "dev-master"
+        "mjmarianetti/zoho": "dev-master"
       }
 
 Or you can run the `composer require mjmarianetti/zoho-php`
